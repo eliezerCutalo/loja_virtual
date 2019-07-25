@@ -44,22 +44,23 @@ class UserModel extends Model{
   void signIn({@required String email, @required String pass, @required VoidCallback onSuccess, @required VoidCallback onFail}) async{
     isLoading = true;
     notifyListeners();
-    _auth.signInWithEmailAndPassword(email: email, password: pass).then((user) async{
-      firebaseUser = user;
-      await _loadCurrentUser();
-      onSuccess();
-      isLoading = false;
-      notifyListeners();
-    }).catchError((e){
-      onFail();
-      isLoading = false;
-      notifyListeners();
-    });
+    _auth.signInWithEmailAndPassword(email: email, password: pass).then(
+      (user) async{
+        firebaseUser = user;
+        await _loadCurrentUser();
+        onSuccess();
+        isLoading = false;
+        notifyListeners();
+      }).catchError((e){
+        onFail();
+        isLoading = false;
+        notifyListeners();
+      });
 
   }
 
-  void recoverPass(){
-
+  void recoverPass(String email){
+    _auth.sendPasswordResetEmail(email: email);
   }
 
   bool isLoggedIn(){
