@@ -17,6 +17,8 @@ class UserModel extends Model{
   }
 
   bool isLoading = false;
+  static UserModel of(BuildContext context) =>
+    ScopedModel.of<UserModel>(context);
 
   void signUp({@required Map<String, dynamic> userData, 
                 @required String pass, 
